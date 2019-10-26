@@ -20,9 +20,12 @@ define('LARAVEL_START', microtime(true));
 | loading any of our classes later on. It feels great to relax.
 |
 */
+// $user = new \App\User();
+// dd($user);
 
 require __DIR__.'/../vendor/autoload.php';
-
+// $user = new \App\User();
+// dd($user);
 /*
 |--------------------------------------------------------------------------
 | Turn On The Lights
@@ -55,6 +58,33 @@ $response = $kernel->handle(
     $request = Illuminate\Http\Request::capture()
 );
 
+// dd($request);
+// dd($response);
+
 $response->send();
 
 $kernel->terminate($request, $response);
+
+// $env = env('APP_ENV');
+// dd($env);
+
+// $environment = App::environment();
+// dd($environment);
+
+// if (App::environment(['local', 'staging'])) {
+//     // The environment is either local OR staging...
+//     $time_end = microtime(true);
+//     $time = $time_end - LARAVEL_START;
+//     echo "Выполнено за $time секунд";
+// }
+
+// $value = config('app.timezone');
+// dd($value);
+
+// config(['app.timezone' => 'Europe/Kiev']);
+// $value = config('app.timezone');
+// dd($value);
+
+$time_end = microtime(true);
+$time = $time_end - LARAVEL_START;
+echo "Выполнено за $time секунд";
