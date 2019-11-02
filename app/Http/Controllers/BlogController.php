@@ -29,7 +29,7 @@ class BlogController extends Controller
         
         $post = DB::table('posts')->where('id', $id)->first();
 
-        return view('blog.show', ['post' => $post]);
+        return view('blog.show', ['post' => $post, 'hasComments'=>true]);
     }
 
 

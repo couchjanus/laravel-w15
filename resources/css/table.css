@@ -1,0 +1,22 @@
+table {
+    @apply text-left w-full border-collapse;
+}
+
+th {
+    @apply py-4 px-6 font-semibold uppercase text-sm .text-gray-500 .border-gray-200 border-2;
+}
+
+tr:hover {
+    @apply bg-gray-100;
+}
+td {
+    @apply py-4 px-6 border-2 .border-gray-100;
+}
+
+td > a {
+    @apply font-bold py-1 px-3 rounded text-xs .text-gray-200 .bg-green-200; 
+}
+
+td > a:hover {
+    @apply text-white;
+}

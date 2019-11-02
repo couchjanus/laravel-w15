@@ -1,12 +1,18 @@
-<!-- views/blog.blade.php -->
-<h1>{{ $title }}</h1>
+<!-- resources/views/blog/index.blade.php -->
+@extends('layouts.blog')
 
-<?php foreach ($posts as $post):?>
-  <div class="blog-post">
-    <h2 class="blog-post-title">
-      <a href="{{ url("blog", $post->id) }}">{{ $post->title }}</a>
-    </h2>               
-    <p class="blog-post-meta">Category: {{ $post->category_id }}</p>
-    <p class="blog-post-meta">Created By: Author At: {{ $post->created_at }}</p>
-  </div><!-- /.blog-post -->
-<?php endforeach;?>
+@section('title')
+	Blog
+@endsection
+
+@section('content')
+<h1>{{ $title }}</h1>
+<div class="row">
+    <!-- post -->
+    @each('blog.partials._chunk', 
+            $posts, 
+            'post', 
+            'blog.partials._post-none'
+        )
+</div>
+@endsection

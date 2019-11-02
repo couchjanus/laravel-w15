@@ -1,0 +1,170 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.body {
+    @apply bg-gray-900 font-sans leading-normal tracking-normal mt-12
+}
+
+.main-nav {
+    @apply bg-gray-900 pt-2 pb-1 px-1 mt-0 h-auto fixed w-full z-20 top-0
+}
+
+@screen md {
+  .main-nav {
+    @apply pt-1;
+  }
+}
+
+.wrap {
+    @apply flex flex-wrap items-center
+}
+
+
+/* nav-common: */
+.nav-common {
+  @apply flex justify-center text-white;
+}
+@screen md {
+  .nav-common {
+    @apply w-1/3 justify-start;
+  }
+}
+
+/* nav-search: */
+.nav-search {
+  @apply w-full bg-gray-800 text-sm text-white border border-transparent rounded py-1 px-2 pl-10 appearance-none leading-normal;
+}
+.nav-search:focus {
+  @apply outline-none border-gray-700;
+}
+
+/* main-c: */
+.main-c {
+  @apply flex flex-col;
+}
+@screen md {
+  .main-c {
+    @apply flex-row;
+  }
+}
+
+/* main-cont: */
+.main-cont {
+  @apply flex-1 bg-gray-100 mt-12  pb-24;
+}
+
+@screen md {
+  .main-cont {
+    @apply mt-2 pb-5;
+  }
+}
+
+/* main-wrap: */
+.main-wrap {
+  @apply bg-gray-900 shadow-lg h-16 fixed bottom-0 mt-12  z-10 w-full;
+}
+@screen md {
+  .main-wrap {
+    @apply relative h-screen w-48;
+  }
+}
+
+/* aside: */
+.aside {
+  @apply content-center text-left justify-between;
+}
+@screen md {
+  .aside {
+    @apply mt-12 w-48 fixed left-0 top-0 content-start;
+  }
+}
+
+/* aside-list: */
+.aside-list {
+  @apply list-none p-0 flex flex-row  py-0  px-1 text-center ;
+}
+@screen md {
+  .aside-list {
+    @apply flex-col py-3 px-2 text-left;
+  }
+}
+
+/* aside-list-item: */
+.aside-list-item {
+  @apply block py-1 align-middle text-white no-underline border-b-2 border-gray-800 pl-1;
+}
+.aside-list-item:hover {
+  @apply text-white border-purple-500;
+}
+
+@screen md {
+  .aside-list-item {
+    @apply py-3;
+  }
+}
+
+/* aside-list-item: */
+
+.list-item-span {
+  @apply pb-1 text-xs text-gray-600 block;
+}
+@screen md {
+  .list-item-span {
+    @apply pb-0 text-base text-gray-400 inline-block;
+  }
+}
+
+/* nav-list-item: */
+.nav-list-item {
+  @apply flex-1;
+}
+@screen md {
+  .nav-list-item {
+    @apply flex-none mr-3;
+  }
+}
+
+
+/* user-list-item: */
+.user-list-item {
+  @apply inline-block py-2 px-4 text-white no-underline;
+}
+.user-list-item:hover {
+  @apply text-purple-500 underline py-2 px-4;
+}
+
+
+/* profile-list-item: */
+.profile-list-item {
+  @apply block p-2 text-white text-sm no-underline;
+}
+.profile-list-item:hover {
+  @apply bg-gray-800 no-underline;
+}
+
+
+/* right-nav: */
+
+.right-nav {
+  @apply flex w-full pt-2 content-center justify-between;
+}
+@screen md {
+  .right-nav {
+    @apply w-1/3 justify-end;
+  }
+}
+
+
+/* right-nav-menu: */
+.right-nav-menu {
+  @apply list-none p-0 flex justify-between flex-1 items-center;
+}
+
+@screen md {
+  .right-nav-menu {
+    @apply flex-none;
+  }
+}
+
+@import "./table.css";

@@ -1,24 +1,37 @@
-{{-- <div class="blog-post">
-   <h2 class="blog-post-title">{{ $post[0]->title }}</h2>
-   <p class="blog-post-meta">Category: {{ $post[0]->category_id }}</p>
-   <p class="blog-post-meta">Created By:  At: {{ $post[0]->created_at }}</p>
-   <blockquote>
+<!-- resources/views/blog/show.blade.php -->
+@extends('layouts.blog')
 
-   <p>{{ $post[0]->content }}</p>
-   </blockquote>
-</div> --}}
+@section('title')
+	Blog Post | {{ $post->title }}
+@endsection
 
-<!-- /.blog-post -->
+@section('content')
+
+  <!-- Latest Posts -->
+  @include('blog.partials._single')
+  
+  {{-- @component('alert')
+    <strong>Whoops!</strong> Something went wrong!
+  @endcomponent
+
+  @component('alert-danger')
+    @slot('title')
+      Forbidden
+    @endslot
+    You are not allowed to access this resource!
+  @endcomponent
+
+  @alert(['type' => 'danger'])
+    You are not allowed to access this resource!
+  @endalert
+
+  @push('sidebar')
+    <li>Sidebar list item</li>
+  @endpush
+
+  @prepend('sidebar')
+    <li>First Sidebar Item</li>
+  @endprepend --}}
 
 
-<div class="blog-post">
-   <h2 class="blog-post-title">{{ $post->title }}</h2>
-   <p class="blog-post-meta">Category: {{ $post->category_id }}</p>
-   <p class="blog-post-meta">Created By:  At: {{ $post->created_at }}</p>
-   <blockquote>
-
-   <p>{{ $post->content }}</p>
-   </blockquote>
-</div>
-
-<!-- /.blog-post -->
+@endsection

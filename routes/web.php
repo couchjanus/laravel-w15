@@ -16,11 +16,27 @@ Route::get('/', function () {
 });
 
 Route::get('blog', 'BlogController@index')->name('blog');
-Route::get('blog/{id}', 'BlogController@show')->name('show');
+
 Route::get('blog/create', 'BlogController@create')->name('create');
 Route::post('blog/create', 'BlogController@store')->name('store');
 Route::get('blog/{id}/edit', 'BlogController@edit')->name('edit');
 Route::post('blog/{id}/edit', 'BlogController@update')->name('update');
+Route::get('blog/{id}', 'BlogController@show')->name('show');
+
+// Route::get('admin', 'Admin\DashboardController')->name('admin');
+// Route::get('admin/posts', 'Admin\PostController@index')->name('admin.posts');
+
+Route::namespace('Admin')
+    ->prefix('admin')
+    ->as('admin.')
+	->group(function () {
+        Route::get('/', 'DashboardController'); 	 
+        Route::resource('posts', 'PostController');
+    	Route::resource('users', 'UsersController');
+});
+
+
+
 
 // Route::get('about', 'AboutController')->name('about');
 // Route::get('contact-us', 'ContactController@index')->name('contact');
