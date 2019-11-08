@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use DB;
+use App\Post;
+use App\Category;
+use App\Enums\PostEnumStatusType;
 
 class PostController extends Controller
 {
@@ -15,12 +17,25 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = DB::table('posts')
-               ->orderBy('id', 'desc')
-               ->get();
-        $title = 'Posts Magement';
-        return view('admin.posts.index', compact('posts', 'title'));
+        $posts = Post::orderBy('id', 'desc')->paginate();
+        $breadcrumbItem = 'Posts';
+        $title = 'Posts Management';
+        $status = PostEnumStatusType::toSelectArray();
+        return view('admin.posts.index', compact('posts', 'title', 'breadcrumbItem', 'status'));
     }
+
+    public function getPostsByStatus(Request $request)
+    {
+        $status = PostEnumStatusType::toSelectArray();
+        $statusPost = $request->status;
+        // $posts = Post::status($statusPost)->get();
+        $posts = Post::status($statusPost)->paginate(5);
+        
+        $breadcrumbItem = 'Posts Status';
+        $title = 'Posts Management';
+        return view('admin.posts.index', compact('posts', 'status', 'statusPost', 'title', 'breadcrumbItem'));
+    }
+ 
 
     /**
      * Show the form for creating a new resource.
@@ -29,7 +44,11 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $title = "Add New Post";
+        $categories = Category::all(); 
+        $status = PostEnumStatusType::toSelectArray(); 
+        $breadcrumbItem = 'New Post';
+        return view('admin.posts.create', compact('title', 'breadcrumbItem'))->withStatus($status)->withCategories($categories);
     }
 
     /**

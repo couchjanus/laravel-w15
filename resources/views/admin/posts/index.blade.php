@@ -1,12 +1,15 @@
 @extends('layouts.admin')
-
+<!-- Breadcrumbs-->
+@section('breadcrumb')
+  @include('layouts.partials.admin._breadcrumb', ['title' => $title, 'url'=>'admin.posts.create', 'getStatus' => 'admin.posts.status', 'back' => 'admin.posts.index'])
+@endsection
 @section('content')
 <div class="flex flex-row flex-wrap flex-grow mt-2">
     <div class="w-full md:w-8/9 xl:w-8/9 p-3">
         <!--Table Card-->
         <div class="bg-white border-transparent rounded-lg shadow-lg">
             <div class="bg-gray-400 border-b-2 border-gray-500 rounded-tl-lg rounded-tr-lg p-2">
-                <h5 class="font-bold uppercase text-gray-600">Table</h5>
+                <h5 class="font-bold uppercase text-gray-600">{{ $title }}</h5>
             </div>
             <div class="p-5">
 
@@ -35,6 +38,13 @@
                     </tbody>
                 </table>
                 <p class="py-2"><a href="#">See More issues...</a></p>
+                @isset($statusPost)
+                    {{ $posts->appends(['status' => $statusPost])->links() }}
+                @else 
+                    {{ $posts->links() }}
+                @endisset
+                
+                
 
             </div>
         </div>

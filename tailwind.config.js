@@ -11,5 +11,6 @@ module.exports = {
     require('tailwindcss-transforms'),
     require('tailwindcss-transitions'),
     require('tailwindcss-border-gradients'),
+    require('tailwindcss-plugins/pagination'),
   ]
 }
