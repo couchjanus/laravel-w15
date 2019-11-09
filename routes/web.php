@@ -15,10 +15,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('blog', 'BlogController@index')->name('blog');
-Route::get('blog/{id}', 'BlogController@show')->name('show');
+// Route::get('blog', 'BlogController@index')->name('blog');
+// Route::get('blog/{id}', 'BlogController@show')->name('show');
 
-Route::namespace('Admin')
+Route::group(['prefix' => 'blog'], function () {
+    Route::get('/', 'BlogController@index')->name('blog.index');
+    Route::get('/{slug}', 'BlogController@show')->name('blog.show');
+});
+
+
+Route::middleware('auth', 'admin')->namespace('Admin')
     ->prefix('admin')
     ->as('admin.')
 	->group(function () {
@@ -36,6 +42,30 @@ Route::namespace('Admin')
 // Route::get('about', 'AboutController')->name('about');
 // Route::get('contact-us', 'ContactController@index')->name('contact');
  
-// getPostsWithCategory 
 
-Route::get('post-list', 'BlogController@getPostsWithCategory'); 
+Route::middleware('auth')
+    ->prefix('profile')
+    ->as('profile.')
+	->group(function () {
+        Route::get('', 'ProfileController@index')
+            ->name('home');
+        Route::get('info', 'ProfileController@info')
+            ->name('info');
+});
+
+Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/session', 'HomeController@showRequest')->name('session');
+
+Route::get('/home', function () {
+    return redirect('profile');
+});
+
+
+// Еще какие-то маршруты....
+
+// Route::fallback(function() {
+//     return "Oops… How you've trapped here?";
+// });

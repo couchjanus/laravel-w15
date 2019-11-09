@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -27,6 +29,14 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/home';
 
+    protected function redirectTo()
+    {
+        if (auth()->user()->isAdmin()) {
+            return '/admin';
+        }
+        return '/home';
+    }
+    
     /**
      * Create a new controller instance.
      *
@@ -35,5 +45,12 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    protected function authenticated(Request $request, $user) {
+        if (Hash::needsRehash($user->password)) {
+            $user->password = Hash::make($request->password);
+            $user->save();
+        }
     }
 }

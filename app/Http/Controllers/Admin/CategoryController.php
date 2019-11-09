@@ -6,6 +6,7 @@ use App\Category;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Enums\CategoryEnumStatusType;
+use App\Http\Requests\UpdatedCategoriesRequest;
 
 class CategoryController extends Controller
 {
@@ -14,14 +15,7 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    // public function index()
-    // {
-    //     $categories = Category::paginate(10);
-    //     $breadcrumbItem = 'Categories';
-    //     $title = 'Categories Management';
-    //     return view('admin.categories.index',compact('categories', 'title', 'breadcrumbItem'));
-    // }
-
+    
     public function index(Request $request)
     {
         $categories = Category::paginate(10);
@@ -62,8 +56,36 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'name' => 'required|unique:categories|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|unique:categories|max:255',
+        //     'description' => 'nullable|string',
+        // ])->validate();
+
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|unique:categories|max:255|min:3',
+        //     'description' => 'nullable|string',
+        // ]);
+        
+        // Переданные данные не прошли проверку
+        // if ($validator->fails()) {
+        //     return redirect('admin/categories/create')
+        //             ->withErrors($validator)
+        //             ->withInput();
+        // }
+
+        // $validator->after(function ($validator) {
+        //     if ($this->somethingElseIsInvalid()) {
+        //         $validator->errors()->add('name', 'Something is wrong with this field!');
+        //     }
+        // });
+ 
         Category::create($request->all());
-        return redirect(route('admin.categories.index'));
+        return redirect(route('admin.categories.index'))->with('success', 'Category Created Successfully!');
     }
 
     /**
@@ -85,7 +107,9 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('admin.categories.edit')->withCategory($category)->withTitle('Edit Category');
+        $breadcrumbItem = 'Edit Category';
+        $status = CategoryEnumStatusType::toSelectArray();
+        return view('admin.categories.edit', compact('breadcrumbItem', 'status', 'category'))->withTitle('Edit Category');
     }
 
     /**
@@ -95,10 +119,10 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdatedCategoriesRequest $request, Category $category)
     {
         $category->update($request->all());
-        return redirect()->route('admin.categories.index');
+        return redirect()->route('admin.categories.index')->with('success', 'Category Updated Successfully!');
     }
 
     /**

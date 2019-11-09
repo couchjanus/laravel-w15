@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Handle the incoming request.
      *
@@ -15,8 +20,7 @@ class DashboardController extends Controller
      */
     public function __invoke(Request $request)
     {
-        //
-        // return "Dashboard Controller";
+        // dd(auth()->user()->isAdmin());
         return view('admin.index'); //"Dashboard Controller";
     }
 }

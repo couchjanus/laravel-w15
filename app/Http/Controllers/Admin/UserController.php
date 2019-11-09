@@ -28,7 +28,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.users.create', ['title' => 'Add New User']);
     }
 
     /**
@@ -39,7 +39,27 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = User::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
+        return redirect()->route('admin.users.index')->with('success', 'User Created Successfully!');
+    }
+
+    /**
+     * Обновление пароля пользователя.
+     *
+     * @param  Request  $request
+     * @return Response
+     */
+    public function updatePassword(Request $request)
+    {
+        // Проверка длины пароля...
+
+        $request->user()->fill([
+        'password' => Hash::make($request->newPassword)
+        ])->save();
     }
 
     /**
@@ -85,7 +105,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete();
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.index')->with('success', 'User Destroed Successfully!');
     }
 
     public function trashed()
@@ -102,7 +122,7 @@ class UserController extends Controller
             ->where('id', $id)
             ->restore();
 
-        return redirect(route('admin.users.trashed'));
+        return redirect()->route('admin.users.trashed')->with('success', 'User Restored Successfully!');
     }
 
     public function userDestroy($id)
@@ -110,12 +130,12 @@ class UserController extends Controller
         $user = User::withTrashed()
                 ->findOrFail($id);
         $user->forceDelete();
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.index')->with('success', 'User Deleted Successfully!');
     }
     
     public function force($id)
     {
         User::trash($id)->forceDelete();
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.users.index')->with('success', 'User Force Deleted Successfully!');
     }
 }
