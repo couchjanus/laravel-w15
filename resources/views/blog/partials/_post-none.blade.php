@@ -1,1 +1,1 @@
-<h2>No posts yet!</h2>
+<p>No Posts Yet!</p>

@@ -14,4 +14,10 @@ class Category extends Model
     {
         return $query->where('status', $status);
     }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
 }

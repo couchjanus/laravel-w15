@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use App\Profile;
+use App\Http\Requests\UpdateUserFormRequest;
 
 class UserController extends Controller
 {
@@ -44,6 +46,10 @@ class UserController extends Controller
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
         ]);
+
+        $profile = new Profile();
+        $user->profile()->save($profile);
+
         return redirect()->route('admin.users.index')->with('success', 'User Created Successfully!');
     }
 
@@ -81,7 +87,7 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        return view('admin.users.edit', ['title' => 'Edit User'])->withUser($user);
     }
 
     /**
@@ -91,9 +97,15 @@ class UserController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserFormRequest $request, User $user)
     {
-        //
+        $user->update($request->all());
+        
+        if (!$user->profile) {
+            $profile = new Profile();
+            $user->profile()->save($profile);
+        }
+        return redirect(route('admin.users.index'))->with('success', 'User Updated Successfully!');
     }
 
     /**

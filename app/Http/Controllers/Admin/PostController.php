@@ -63,24 +63,16 @@ class PostController extends Controller
             'title' => 'required|unique:posts|max:255|min:4',
             'content' => 'required',
         ]);
-
-        // $validator = Validator::make($request->all(), [
-        //     'title' => 'required|unique:posts|max:255',
-        //     'content' => 'required',
-        // ]);
-
-        // if ($validator->fails()) {
-        //     return redirect(route('admin.posts.create'))
-        //             ->withErrors($validator)
-        //             ->withInput();
-        // }
         // Получить post или создать, если не существует...
         $post = Post::firstOrCreate([
             'title' => $request->title, 
             'content'=>$request->content, 
             'status'=>$request->status, 
             'category_id'=>$request->category_id, 
-            'user_id'=>Auth::id()]);
+            'user_id'=>1
+            // 'user_id'=>Auth::id()
+            ]);
+        $post->tags()->sync((array)$request->input('tags'));
         return redirect()->route('admin.posts.index')->with('success', 'Post Created Successfully!');
     }
 
@@ -101,11 +93,20 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
         $categories = Category::pluck('name', 'id'); 
         $status = PostEnumStatusType::toSelectArray(); 
-        return view('admin.posts.edit')->withTitle('Edit Post')->withPost($post)->withStatus($status)->withCategories($categories);
+        $breadcrumbItem = 'Edit Post';
+       
+        // dump($post->tags[0]->slug);
+        // foreach ($post->tags as $value) {
+        //     # code...
+        //     dump($value->slug);
+        // }
+        // dump($post->tags->pluck('name'));
+        $tags = $post->tags->pluck('id');
+        return view('admin.posts.edit', compact('breadcrumbItem', 'tags'))->withTitle('Edit Post')->withPost($post)->withStatus($status)->withCategories($categories);
     }
 
     /**
@@ -124,7 +125,9 @@ class PostController extends Controller
             'category_id' => $request->category_id, 
             'user_id'     => Auth::id()
             ]);
-        return redirect(route('admin.posts.index'));
+
+        $post->tags()->sync((array)$request->input('tags'));
+        return redirect(route('admin.posts.index'))->with('success','Post updated successfully');
     }
 
     /**
@@ -133,9 +136,12 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
     public function destroy($id)
     {
+        $post->tags()->detach();
         $post->delete();
-        return redirect()->route('admin.posts.index');
+        return redirect()->route('admin.posts.index')->with('success','Post deleted successfully');
+
     }
 }

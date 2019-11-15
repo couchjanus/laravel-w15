@@ -15,4 +15,8 @@
             'blog.partials._post-none'
         )
 </div>
+<!-- Pagination -->
+{{-- {{ $posts->links() }} --}}
+{{-- {!! $posts->render() !!} --}}
+{{ $posts->onEachSide(2)->links() }}
 @endsection

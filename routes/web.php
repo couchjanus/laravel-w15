@@ -15,16 +15,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('blog', 'BlogController@index')->name('blog');
-// Route::get('blog/{id}', 'BlogController@show')->name('show');
-
 Route::group(['prefix' => 'blog'], function () {
     Route::get('/', 'BlogController@index')->name('blog.index');
     Route::get('/{slug}', 'BlogController@show')->name('blog.show');
+    Route::get('category/{id}', 'BlogController@getPostsByCategory')->name('blog.category');
 });
 
-
-Route::middleware('auth', 'admin')->namespace('Admin')
+// Route::middleware('auth', 'admin')->namespace('Admin')
+Route::namespace('Admin')
     ->prefix('admin')
     ->as('admin.')
 	->group(function () {
@@ -36,12 +34,23 @@ Route::middleware('auth', 'admin')->namespace('Admin')
         Route::get('users/trashed', 'UserController@trashed')->name('users.trashed');
         Route::post('users/restore/{id}', 'UserController@restore')->name('users.restore');
         Route::delete('users/force/{id}', 'UserController@force')->name('users.force');
-    	Route::resource('users', 'UserController');
+        Route::resource('users', 'UserController');
+        Route::resource('tags', 'TagController');
 });
 
 // Route::get('about', 'AboutController')->name('about');
 // Route::get('contact-us', 'ContactController@index')->name('contact');
  
+
+// Route::middleware('auth')
+//     ->prefix('profile')
+//     ->as('profile.')
+// 	->group(function () {
+//         Route::get('', 'ProfileController@index')
+//             ->name('home');
+//         Route::get('info', 'ProfileController@info')
+//             ->name('info');
+// });
 
 Route::middleware('auth')
     ->prefix('profile')
@@ -51,6 +60,8 @@ Route::middleware('auth')
             ->name('home');
         Route::get('info', 'ProfileController@info')
             ->name('info');
+        Route::put('store', 'ProfileController@store')
+            ->name('store');
 });
 
 Auth::routes();

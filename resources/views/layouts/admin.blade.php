@@ -19,7 +19,7 @@
 @endsection
 
 @section('main')                    
-    <div class="flex flex-col md:flex-row">
+    <div class="flex flex-col md:flex-row" id="app">
         <div class="bg-gray-900 shadow-lg h-16 fixed bottom-0 mt-12 md:relative md:h-screen z-10 w-full md:w-48">
             <!-- Sidebar -->
             @include('layouts.partials.admin._sidebar')

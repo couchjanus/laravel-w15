@@ -1,3 +1,10 @@
+<style>
+.image {
+  width:30px;
+  margin-right: 5px;
+}
+</style>
+
 <div class="post-single">
 
     <div class="post-thumbnail">
@@ -32,7 +39,7 @@
         <a href="#" class="tag">#Business</a><a href="#" class="tag">#Tricks</a><a href="#" class="tag">#Financial</a><a href="#" class="tag">#Economy</a>
       </div>
       {{-- comments --}}
-      @includeWhen($hasComments, 'blog.partials._comments', ['some' => 'data'])
+      @includeWhen($hascomment, 'blog.partials._comments', ['some' => 'data'])
       {{-- @include('blog.partials._comments') --}}
     </div>
   </div>

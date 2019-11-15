@@ -28,7 +28,7 @@
                             <td>{{ $post->id }}</td>
                             <td>{{ $post->title }}</td>
                             <td>
-                                <a href="#" class="bg-green-300 hover:bg-green-500">Edit</a>
+                                <a href="{{ route('admin.posts.edit', $post->id) }}" class="bg-green-300 hover:bg-green-500">Edit</a>
                                 <a href="#" class="bg-blue-300 hover:bg-blue-500">View</a>
                                 <a href="#" class="bg-red-300 hover:bg-red-500">Delete</a>
                             </td>

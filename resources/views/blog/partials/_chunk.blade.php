@@ -1,16 +1,20 @@
-<div class="post col-xl-6">
-    <div class="post-thumbnail">
-          <a href="post.html"><img src="images/cat1.jpg" alt="..." class="img-fluid"></a>
-    </div>
-        <div class="post-details">
-          <div class="post-meta d-flex justify-content-between">
-            <div class="date meta-last">{{ $post->created_at }}</div>
-            <div class="category"><a href="#">{{ $post->category_id }}</a></div>
-          </div>
-          <a href="/blog/{{ $post->id }}">
-            <h3 class="h4">{{ $post->title }}</h3>
-          </a>
-          
-          <p class="text-muted">{{ Str::limit($post->content, 50)}}</p>
+<div class="col-md-6">
+  <div class="card mb-4 shadow-sm">
+    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+    <div class="card-body">
+      <a href="{{ route('blog.show', $post->slug) }}">
+        <h3 class="h4">{{ $post->title }}</h3>
+      </a>
+      <p class="card-text">
+        {{ Str::limit($post->content, 50)}} <strong>Created At: {{ $post->created_at }}</strong>
+        <small class="text-muted">Category: {{ $post->category->name }} | Author: {{ $post->user->name }}</small>
+      </p>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="btn-group">
+          <a href="{{ route('blog.show', $post->slug) }}"><button type="button" class="btn btn-sm btn-outline-secondary">Read more</button></a>
         </div>
       </div>
+    </div>
+  </div>
+</div>
