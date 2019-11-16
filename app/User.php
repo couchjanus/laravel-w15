@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Hash;
 
+// class User extends Authenticatable implements MustVerifyEmail
 class User extends Authenticatable
 {
     use Notifiable;

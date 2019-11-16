@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\Enums\PostEnumStatusType;
 
 class BlogController extends Controller
 {
@@ -26,7 +27,7 @@ class BlogController extends Controller
 
     public function getPostsByCategory($categoryId)   {
         $posts = Post::where([
-                        'status' => PostType::Published, 
+                        'status' => PostEnumStatusType::Published, 
                         'category_id' => $categoryId
                     ])
                     ->with('category')

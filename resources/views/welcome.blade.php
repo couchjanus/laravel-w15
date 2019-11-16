@@ -88,6 +88,17 @@
                     Laravel
                 </div>
 
+                <div class="row">
+                    <div class='col'>
+                        <form action = "{{ route('reminder') }}" method="POST">
+                        @csrf
+                            <input type="email" name="email" placeholder="Email address">
+                            <input type="text" name="event" placeholder="Some event">
+                            <button type="submit">Send Me A Mail</button>
+                        </form> 
+                    </div>
+                </div>
+
                 <div class="links">
                     <div id="app">
                         <select-component></select-component>
