@@ -13,10 +13,13 @@ class DatabaseSeeder extends Seeder
     {
         // $this->call(UsersTableSeeder::class);
         // $this->call(CategoriesSeeder::class);
-        $this->call(PostsTableSeeder::class);
+        // $this->call(PostsTableSeeder::class);
+        // $this->call(PermissionsSeeder::class);
+        $this->call(RolesSeeder::class);
         // \DB::table('users')->truncate();
         // \DB::table('categories')->truncate();
         // \DB::table('posts')->truncate();
+        
         // $this->call([
         //     UsersTableSeeder::class,
         //     PostsTableSeeder::class,

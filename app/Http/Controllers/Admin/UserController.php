@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Profile;
 use App\Http\Requests\UpdateUserFormRequest;
+use App\Role;
 
 class UserController extends Controller
 {
@@ -17,6 +18,7 @@ class UserController extends Controller
      */
     public function index()
     {
+        // abort_unless(\Gate::allows('user-access'), 403);
         $title = 'Users Management';
         $breadcrumbItem = 'Users';
         $users = User::paginate();
@@ -30,7 +32,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.users.create', ['title' => 'Add New User']);
+        // abort_unless(\Gate::allows('user-create'), 403);
+        $title = 'Add New User';
+        $breadcrumbItem = 'Add User';
+        $roles = Role::all()->pluck('name', 'id');
+        return view('admin.users.create',compact('title', 'breadcrumbItem', 'roles'));
     }
 
     /**
@@ -41,11 +47,14 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        // abort_unless(\Gate::allows('user-create'), 403);
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
         ]);
+
+        $user->roles()->sync($request->input('roles', []));
 
         $profile = new Profile();
         $user->profile()->save($profile);
@@ -76,7 +85,9 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        abort_unless(\Gate::allows('user-show'), 403);
+        $user->load('roles');
+        return view('admin.users.show', compact('user'))->withUser($user)->withTitle('Users Management');
     }
 
     /**
@@ -87,7 +98,12 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.users.edit', ['title' => 'Edit User'])->withUser($user);
+        // abort_unless(\Gate::allows('user-edit'), 403);
+        $breadcrumbItem = 'Edit User';
+        $title = 'Edit User';
+        $roles = Role::all()->pluck('name', 'id');
+        $user->load('roles');
+        return view('admin.users.edit', compact('title', 'breadcrumbItem', 'roles'))->withUser($user);
     }
 
     /**
@@ -99,12 +115,15 @@ class UserController extends Controller
      */
     public function update(UpdateUserFormRequest $request, User $user)
     {
+        // abort_unless(\Gate::allows('user-edit'), 403);
+
         $user->update($request->all());
         
         if (!$user->profile) {
             $profile = new Profile();
             $user->profile()->save($profile);
         }
+        $user->roles()->sync($request->input('roles', []));
         return redirect(route('admin.users.index'))->with('success', 'User Updated Successfully!');
     }
 
@@ -116,6 +135,9 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        // abort_unless(\Gate::allows('user-delete'), 403);
+
+        $user->roles()->detach();
         $user->delete();
         return redirect()->route('admin.users.index')->with('success', 'User Destroed Successfully!');
     }

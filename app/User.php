@@ -81,4 +81,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+    public function social()
+    {
+        return $this->hasMany(Social::class);
+    }
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
 }

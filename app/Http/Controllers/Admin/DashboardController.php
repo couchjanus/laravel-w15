@@ -7,9 +7,14 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
+    /**
+     * Only Authenticated users for "admin" guard 
+     * are allowed.
+     */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
+        $this->middleware('auth:admin');
     }
 
     /**
