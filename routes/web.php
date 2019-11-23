@@ -80,14 +80,16 @@ Route::middleware('auth')
 Auth::routes();
 // Auth::routes(['verify' => true]);
 
-Route::get('/home', function () {
+Route::get('home', function () {
     return redirect('profile');
-});
+})->name('home');
 
 // Socialite Register Routes
 
 Route::get('social/{provider}', 'Auth\SocialController@redirect')->name('social.redirect');
 Route::get('social/{provider}/callback', 'Auth\SocialController@callback')->name('social.callback');
+
+Route::get('forum', 'ForumController@index');
 
 // Еще какие-то маршруты....
 

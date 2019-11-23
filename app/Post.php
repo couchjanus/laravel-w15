@@ -17,7 +17,7 @@ class Post extends Model
     protected $fillable = [
         'title', 'content', 'category_id', 'user_id', 'status' 
     ];
-
+    
     static function scopeStatus($query, $status)
     {
         return $query->where('status', $status);
