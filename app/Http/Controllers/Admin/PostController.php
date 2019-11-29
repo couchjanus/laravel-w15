@@ -89,6 +89,7 @@ class PostController extends Controller
             'user_id'=>Auth::guard('admin')->id()
             ]);
         $post->tags()->sync((array)$request->input('tags'));
+        $post->pictures()->sync((array)$request->input('pictures'));
         return redirect()->route('admin.posts.index')->with('success', 'Post Created Successfully!');
     }
 

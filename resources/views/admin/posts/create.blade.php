@@ -26,14 +26,21 @@
             </div>
             <div class="flex flex-wrap mx-3 mb-6">
                 <div class="w-full px-3">
-                <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
-                    Content
-                </label>
-                <textarea class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-content" name="content">
-                </textarea>
-                
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password">
+                        Content
+                    </label>
+                    <textarea class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-content" name="content">
+                    </textarea>
                 </div>
             </div>
+
+            <div class="flex flex-wrap mx-3 mb-6">
+                <div class="w-full px-3">
+                    <upload-files :input_name="'pictures[]'" :post_url="'admin/pictures/upload-file'"></upload-files>
+                </div>
+            </div>
+
+
             <div class="flex flex-wrap mx-3 mb-12">
                 <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
                     <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-status">
@@ -72,6 +79,9 @@
                     </div>
                 </div>
             </div>
+
+
+
             <div class="md:flex md:items-center mb-2 mt-2 mx-auto">
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">Save</button>
             </div>

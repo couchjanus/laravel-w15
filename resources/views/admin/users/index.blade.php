@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 <!-- Breadcrumbs-->
 @section('breadcrumb')
-  @include('layouts.partials.admin._breadcrumb', ['title' => $title, 'url'=>'admin.users.create', 'back' => 'admin.users.index', 'trash'=>'admin.users.trashed'])
+  @include('layouts.partials.admin._breadcrumb', ['title' => $title, 'url'=>'admin.users.create', 'back' => 'admin.users.index', 'trash'=>'admin.users.trashed','search'=>true])
 @endsection
 
 @section('content')

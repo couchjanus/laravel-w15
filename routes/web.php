@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,10 +35,21 @@ Route::namespace('Admin')
         Route::get('users/trashed', 'UserController@trashed')->name('users.trashed');
         Route::post('users/restore/{id}', 'UserController@restore')->name('users.restore');
         Route::delete('users/force/{id}', 'UserController@force')->name('users.force');
+        Route::any('users/search', function (Request $request) {
+            $q = $request->q;
+            $users = App\User::where('name','LIKE','%'.$q.'%')->orWhere('email','LIKE','%'.$q.'%')->paginate();
+            if(count($users) > 0) {
+                return view('admin.users.index', compact('users', 'q'))->withTitle('Users Management')->withBreadcrumbItem('Search Users');
+            } else {
+                  return redirect(route('admin.users.index'))->withWarning('No Details found. Try to search again !');
+            }
+        })->name('users.search');
         Route::resource('users', 'UserController');
         Route::resource('tags', 'TagController');
         Route::resource('permissions', 'PermissionController');
         Route::resource('roles', 'RoleController');
+        Route::post('pictures/upload-file', 'PictureController@uploadFile');
+        Route::resource('pictures', 'PictureController');
         Route::get('invitations', 'InvitationsController@index')->name('showInvitations');
         Route::post('invite/{id}', 'InvitationsController@sendInvite')
         ->name('send.invite');
@@ -91,6 +103,20 @@ Route::get('social/{provider}/callback', 'Auth\SocialController@callback')->name
 
 Route::get('forum', 'ForumController@index');
 
+Route::get('articles', 'ArticleController@index')->name('articles.index');
+Route::get('articles/{id}','ArticleController@show')->name('articles.show'); 
+
+Route::get('/search', function (\App\Repositories\ElasticsearchArticleRepositoryInterface $repository) {
+   
+    $articles = $repository->search((string) request('q'));
+ 
+    // dump($articles);
+    return view('articles.index', [
+        'posts' => $articles,
+        'title' => 'Awesome Blog'
+    ]);
+ })->name("repo.search");
+ 
 // Еще какие-то маршруты....
 
 // Route::fallback(function() {

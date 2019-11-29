@@ -1,16 +1,14 @@
 <aside class="col-lg-4">
-          <!-- Widget [Search Bar Widget]-->
-          <div class="widget search">
-            <header>
-              <h3 class="h6">Search the blog</h3>
-            </header>
-            <form action="#" class="search-form">
-              <div class="form-group">
-                <input type="search" placeholder="What are you looking for?">
-                <button type="submit" class="submit"><i class="icon-search"></i></button>
-              </div>
-            </form>
-          </div>
+  <!-- Widget [Search Bar Widget]-->
+  <div class="widget search p-3">
+    <h4 class="font-italic">Search the blog</h4>
+    <form action="#" class="search-form"  action="{{ url('/search') }}" method="get">
+      <div class="form-group">
+        <input type="search" placeholder="What are you looking for?"  name="q" value="{{ request('q') }}">
+        <button type="submit" class="submit"><i class="icon-search"></i>Go!</button>
+      </div>
+    </form>
+  </div>
           
           <!-- Widget [Categories Widget]-->
           <div class="widget categories">

@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Laravel\Scout\Searchable;
 
 class Post extends Model
 {
     use Sluggable;
+    use Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -50,5 +52,10 @@ class Post extends Model
     public function tags()
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    public function pictures()
+    {
+        return $this->belongsToMany(Picture::class);
     }
 }

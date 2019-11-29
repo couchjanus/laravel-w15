@@ -12,6 +12,12 @@
   
   <div class="flex w-full pt-2 content-center justify-between md:w-2/3 md:justify-end">
   	<ul class="list-reset flex justify-between flex-1 md:flex-none items-center">
+    @isset($search)
+      <form class="block mx-5 mt-4 lg:inline-block lg:mt-0" action="/admin/users/search" method="POST" role="search">@csrf
+          <input class="inline-block text-sm px-4 py-2 leading-none border rounded text-black border-white" type="text" placeholder="Search users" aria-label="Search" name="q">
+          <button class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0" type="submit">Search</button>
+      </form>
+    @endisset
     @isset($url)
 	    <li class="flex-1 md:flex-none md:mr-3">
           <a href="{{route($url)}}">
